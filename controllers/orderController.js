@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
 
 // Function to place an order
 const placeOrder = async (req, res) => {
-  const frontend_url = "http://localhost:5175";
+  const frontend_url = "food-frontend-blond.vercel.app";
   try {
     const newOrder = new orderModel({
       userId: req.body.userId,
