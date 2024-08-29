@@ -20,8 +20,11 @@ const port =process.env.PORT|| 4000;
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
-app.use(cors()); // Enable Cross-Origin Resource Sharing
-
+// app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(cors({
+  origin: 'https://admin-uyxr.onrender.com',  // Replace with your actual frontend URL
+  credentials: true
+}));
 // DB connection
 connectDb();
 
