@@ -22,7 +22,8 @@ app.use(express.json()); // Parse incoming JSON requests
 // Allow requests from multiple origins
 const allowedOrigins = [
   'https://food-frontend-blond.vercel.app',  // Frontend URL
-  'https://your-admin-url.onrender.com'     // Admin URL
+  'https://your-admin-url.onrender.com' 
+  'https://food-backend-62oi.onrender.com'// Admin URL
 ];
 
 app.use(cors({
