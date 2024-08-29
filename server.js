@@ -1,9 +1,7 @@
 
-
-
 import cors from "cors";
-import 'dotenv/config'; // Load environment variables
 import express from "express";
+import 'dotenv/config'; // Load environment variables
 import { connectDb } from "./config/db.js";
 import cartRouter from "./routes/cartRoutes.js";
 import foodRouter from "./routes/foodRoute.js";
@@ -16,15 +14,29 @@ console.log("RAZORPAY_KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
 
 // Create a basic server
 const app = express();
-const port =process.env.PORT|| 4000;
+const port = process.env.PORT || 4000;
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
-// app.use(cors()); // Enable Cross-Origin Resource Sharing
+
+// Allow requests from multiple origins
+const allowedOrigins = [
+  'https://food-frontend-blond.vercel.app',  // Frontend URL
+  'https://your-admin-url.onrender.com'     // Admin URL
+];
+
 app.use(cors({
-  origin: 'https://admin-uyxr.onrender.com',  // Replace with your actual frontend URL
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      // Allow requests from allowed origins and requests without origin (e.g., from curl or Postman)
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
+
 // DB connection
 connectDb();
 
@@ -43,8 +55,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Server Started on http://localhost:${port}`);
 });
-
-
-
-
-
